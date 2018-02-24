@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+import json
 import braintree
 from django.core.exceptions import ImproperlyConfigured
 
@@ -36,3 +36,19 @@ class BraintreeProvider(BasicProvider):
             form.save()
             raise RedirectNeeded(payment.get_success_url())
         return form
+
+    def capture(self, payment, amount=None):
+        pass
+
+    def release(self, payment):
+        result = braintree.Transaction.refund(payment.transaction_id)
+        if result.is_success:
+            payment.attrs.release = json.dumps(result.transaction)
+
+    def refund(self, payment, amount=None):
+        amount = str(amount or payment.total)
+        result = braintree.Transaction.refund(payment.transaction_id)
+        if result.is_success:
+            payment.attrs.refund = json.dumps(payment.transaction)
+
+        return Decimal(amount)
