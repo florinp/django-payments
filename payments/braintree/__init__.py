@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
+
 import json
 import braintree
 from django.core.exceptions import ImproperlyConfigured
+from decimal import Decimal
 
 from .forms import BraintreePaymentForm
 from .. import PaymentStatus, RedirectNeeded
