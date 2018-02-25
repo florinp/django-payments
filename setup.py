@@ -21,7 +21,7 @@ PACKAGES = [
     'payments.wallet']
 
 REQUIREMENTS = [
-    'braintree>=3.14.0',
+    'braintree>=3.37.0',
     'Django>=1.11',
     'cryptography>=1.1.0',
     'PyJWT>=1.3.0',
