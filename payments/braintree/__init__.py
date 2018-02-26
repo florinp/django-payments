@@ -49,7 +49,7 @@ class BraintreeProvider(BasicProvider):
 
     def refund(self, payment, amount=None):
         amount = str(amount or payment.total)
-        result = braintree.Transaction.refund(payment.transaction_id)
+        result = braintree.Transaction.refund(payment.transaction_id, amount)
         if result.is_success:
             payment.attrs.refund = json.dumps(payment.transaction)
 
